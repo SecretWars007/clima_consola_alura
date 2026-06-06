@@ -91,12 +91,7 @@ public class ConsolaMenu {
             }
             System.out.println();
             var clima = obtenerClimaUseCase.ejecutar(nombreCiudad, codigoPais);
-            System.out.printf("Clima en %s, %s: %s, %.1f°C, Humedad: %d%%\n",
-                    clima.ciudad(),
-                    clima.Pais(),
-                    clima.descripcion(),
-                    clima.temperatura(),
-                    clima.humedad());
+            mostrarReporteClima(clima);
             System.out.println("Presione Enter para continuar...");
             scanner.nextLine(); // Espera a que el usuario presione Enter
         } catch (Exception e) {
@@ -142,5 +137,32 @@ public class ConsolaMenu {
             return "🥶 Abrígate! Hace más frío que el corazón de tu ex";
         }
         return "😎 Clima perfecto para salir a pasear";
+    }
+
+    private void mostrarReporteClima(Clima c) {
+
+        System.out.println(CYAN + "┌─────────────────────────────────────┐");
+        System.out.printf("│ %-35s │%n", "🌤️ REPORTE CLIMÁTICO");
+        System.out.println("├─────────────────────────────────────┤" + RESET);
+
+        System.out.printf(YELLOW + "│ 📍 Ciudad: %-24s │%n" + RESET, c.ciudad() + ", " + c.pais());
+        System.out.printf(YELLOW + "│ 🌤️ Condición: %-22s │%n" + RESET, c.descripcion());
+        System.out.println(CYAN + "├─────────────────────────────────────┤" + RESET);
+
+        System.out.printf(YELLOW + "│ 🌡️ Actual: %-5.1f°C  Sensación: %-5.1f°C │%n" + RESET, c.temperatura(),
+                c.sensacionTermica());
+        System.out.printf(YELLOW + "│ 📉 Mín: %-6.1f°C   📈 Máx: %-6.1f°C  │%n" + RESET, c.tempMin(), c.tempMax());
+        System.out.printf(YELLOW + "│ 💧 Humedad: %-3d%%   🔽 Presión: %-4d hPa │%n" + RESET, c.humedad(), c.presion());
+        System.out.printf(YELLOW + "│ 💨 Viento: %-5.1f m/s              │%n" + RESET, c.viento());
+
+        if (c.lluvia1h() != null && c.lluvia1h() > 0) {
+            System.out.printf(YELLOW + "│ 🌧️ Lluvia 1h: %-6.1f mm           │%n" + RESET, c.lluvia1h());
+        } else {
+            System.out.printf(YELLOW + "│ ☀️ Sin lluvia                      │%n" + RESET);
+        }
+
+        System.out.println(CYAN + "└─────────────────────────────────────┘" + RESET);
+        System.out.println("\nPresione Enter para continuar...");
+        scanner.nextLine();
     }
 }

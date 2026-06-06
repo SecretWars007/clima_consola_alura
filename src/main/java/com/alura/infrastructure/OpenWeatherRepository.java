@@ -48,13 +48,28 @@ public class OpenWeatherRepository implements IClimaRepository {
             double temp = jsonResponse.getAsJsonObject("main").get("temp").getAsDouble();
             int humidity = jsonResponse.getAsJsonObject("main").get("humidity").getAsInt();
             String description = jsonResponse.getAsJsonArray("weather").get(0).getAsJsonObject().get("description").getAsString();
+            double feelslike = jsonResponse.getAsJsonObject("main").get("feels_like").getAsDouble();
+            double tempMin = jsonResponse.getAsJsonObject("main").get("temp_min").getAsDouble();
+            double tempMax = jsonResponse.getAsJsonObject("main").get("temp_max").getAsDouble();
+            int pressure = jsonResponse.getAsJsonObject("main").get("pressure").getAsInt();
+            double windSpeed = jsonResponse.getAsJsonObject("wind").get("speed").getAsDouble();
+            Double lluvia1h = null;
+            if (jsonResponse.has("rain") && jsonResponse.getAsJsonObject("rain").has("1h")) {
+                lluvia1h = jsonResponse.getAsJsonObject("rain").get("1h").getAsDouble();
+            }
 
             return new Clima(
                     ciudad,
                     pais,
                     description,
                     temp,
-                    humidity
+                    feelslike,
+                    tempMin,
+                    tempMax,
+                    humidity,
+                    pressure,
+                    windSpeed,
+                    lluvia1h
             );
     }
 
