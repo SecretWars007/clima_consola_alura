@@ -1,6 +1,10 @@
-# CIELOSCOPIO Alura
+# CIELOSCOPIO Alura v1.1.0
 
 Aplicación de consola en Java para consultar el clima actual desde la API de OpenWeather. El proyecto está desarrollado para cumplir el reto Cieloscopio de los cursos de Alura Latam y está organizado con una arquitectura limpia que separa las capas de presentación, aplicación, dominio e infraestructura.
+
+## Versión
+
+- `1.1.0` — Versión actual del proyecto Cieloscopio.
 
 ## Autor
 
@@ -16,6 +20,8 @@ Aplicación de consola en Java para consultar el clima actual desde la API de Op
 - Consulta del clima real usando OpenWeather API
 - Validación de entrada para ciudad y país
 - Mensajes de estado y animación simple durante la carga
+- Salida formateada con datos en español y unidades métricas
+- Preparado para cargar credenciales desde `.env` con `java-dotenv`
 - Presentación de datos climáticos:
   - Ciudad
   - País
