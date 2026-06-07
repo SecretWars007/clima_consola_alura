@@ -123,22 +123,6 @@ public class ConsolaMenu {
                 """ + RESET);
     }
 
-    private String mensajeDivertido(Clima clima) {
-        double temp = clima.temperatura();
-        String desc = clima.descripcion();
-
-        if (desc.contains("cielo claro") && temp > 25) {
-            return "🔥 Ponte bloqueador, está que arde!";
-        }
-        if (desc.contains("lluvia")) {
-            return "☔ Sacá la sombrilla o te vas a mojar como sopa";
-        }
-        if (temp < 10) {
-            return "🥶 Abrígate! Hace más frío que el corazón de tu ex";
-        }
-        return "😎 Clima perfecto para salir a pasear";
-    }
-
     private void mostrarReporteClima(Clima c) {
 
         System.out.println(CYAN + "┌─────────────────────────────────────┐");
@@ -153,16 +137,28 @@ public class ConsolaMenu {
                 c.sensacionTermica());
         System.out.printf(YELLOW + "│ 📉 Mín: %-6.1f°C   📈 Máx: %-6.1f°C  │%n" + RESET, c.tempMin(), c.tempMax());
         System.out.printf(YELLOW + "│ 💧 Humedad: %-3d%%   🔽 Presión: %-4d hPa │%n" + RESET, c.humedad(), c.presion());
-        System.out.printf(YELLOW + "│ 💨 Viento: %-5.1f m/s              │%n" + RESET, c.viento());
+        System.out.printf(YELLOW + "|  Viento: %.1f m/s                           |%n" + RESET, c.viento());
 
-        if (c.lluvia1h() != null && c.lluvia1h() > 0) {
-            System.out.printf(YELLOW + "│ 🌧️ Lluvia 1h: %-6.1f mm           │%n" + RESET, c.lluvia1h());
-        } else {
-            System.out.printf(YELLOW + "│ ☀️ Sin lluvia                      │%n" + RESET);
-        }
+        // NUEVO: Índice UV
+        System.out.printf(YELLOW + "|  ☀️  Índice UV: %.1f - %s            |%n" + RESET,
+                c.indiceUV(), nivelUV(c.indiceUV()));
 
-        System.out.println(CYAN + "└─────────────────────────────────────┘" + RESET);
-        System.out.println("\nPresione Enter para continuar...");
-        scanner.nextLine();
+        // NUEVO: Fase Lunar
+        System.out.printf(YELLOW + "|  🌙  Fase Lunar: %s                     |%n" + RESET, c.faseLunar());
+
+        System.out.println(CYAN + "+---------------------------------------------+" + RESET);
+    }
+
+    // Método helper para traducir el nivel UV
+    private String nivelUV(double uv) {
+        if (uv < 3)
+            return "Bajo";
+        if (uv < 6)
+            return "Moderado";
+        if (uv < 8)
+            return "Alto";
+        if (uv < 11)
+            return "Muy Alto";
+        return "Extremo";
     }
 }
